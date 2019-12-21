@@ -84,7 +84,7 @@ public class PartidaController {
 
 		for (User user : users) {
 			for (Mort mort : morts) {
-				if (!user.getUserName().equals(mort.getUserMort().getUserName()))
+				if (!user.getUserName().equals(mort.getUserMort().getUserName())) // Creo que esto está mal
 					vius.add(user);
 			}
 		}
@@ -117,7 +117,7 @@ public class PartidaController {
 
 		for (User user : users) {
 			for (Mort mort : morts) {
-				if (!user.getUserName().equals(mort.getUserMort().getUserName())) {
+				if (!user.getUserName().equals(mort.getUserMort().getUserName())) { // Creo que esto está mal
 					Set<RolJugadorPartida> rolsjugador = user.getUsersRolsPartida();
 
 					for (RolJugadorPartida rolJugadorPartida : rolsjugador) {
@@ -178,7 +178,7 @@ public class PartidaController {
 			Set<RolJugadorPartida> rolsjugador = userXat.getUsersRolsPartida();
 			for (RolJugadorPartida rolJugadorPartida : rolsjugador) {
 				if (rolJugadorPartida.getPartida().equals(partida)
-						&& "llop".equals(rolJugadorPartida.getRol().getDescripcio())) {
+						&& "llop".equals(rolJugadorPartida.getRol().getDescripcio())) { // Creo que esto está mal
 					xatLlops.add(xatMessage);
 					break;
 				}
