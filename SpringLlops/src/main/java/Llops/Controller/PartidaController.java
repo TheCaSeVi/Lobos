@@ -27,9 +27,9 @@ public class PartidaController {
 	private PartidaRepository partidaRepository;
 	@Autowired
 	private XatMessageRepository xatMessageRepository;
-	
+
 	// inici
-	
+
 	// fi torn
 
 	@GetMapping(path = "/getHistorial")
@@ -45,15 +45,13 @@ public class PartidaController {
 
 		Iterable<Vot> votsPartida = partida.getVotsPartida();
 
-		
-
 		return votsPartida;
 
 	}
 
 	@GetMapping(path = "/getXat")
 	@ResponseBody
-	private ArrayList<String> getXat(@RequestParam int idPartida) {
+	private Iterable<XatMessage> getXat(@RequestParam int idPartida) {
 
 		Optional<Partida> partidaOptional = partidaRepository.findById(idPartida);
 
@@ -62,15 +60,9 @@ public class PartidaController {
 
 		Partida partida = partidaOptional.get();
 
-		Set<XatMessage> messages = partida.getPartidaXat();
+		Iterable<XatMessage> messages = partida.getPartidaXat();
 
-		ArrayList<String> missatges = new ArrayList<String>();
-
-		for (XatMessage xm : messages) {
-			missatges.add(xm.toString());
-		}
-
-		return missatges;
+		return messages;
 	}
 
 	@GetMapping(path = "/jugadorsVius")

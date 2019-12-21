@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "xatMessages")
 public class XatMessage implements Serializable {
@@ -24,10 +26,12 @@ public class XatMessage implements Serializable {
 
 	@JoinColumn(name = "sender_xat_message", nullable = false)
 	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonBackReference
 	private User senderXatMessage;
 
 	@JoinColumn(name = "partida_xat_message", nullable = false)
 	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonBackReference
 	private Partida partidaXatMessage;
 
 	@Column(name = "content")

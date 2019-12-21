@@ -17,7 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.sql.rowset.serial.SerialArray;
 
 @Entity
 @Table(name = "message")
@@ -42,7 +41,7 @@ public class Message implements Serializable {
 
 	@Lob
 	@Column(name = "content", length = 50)
-	private String contetn;
+	private String content;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date")
@@ -53,11 +52,11 @@ public class Message implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Message(User senderMessage, User reciveMessage, String contetn, Date date) {
+	public Message(User senderMessage, User reciveMessage, String content, Date date) {
 		super();
 		this.senderMessage = senderMessage;
 		this.reciveMessage = reciveMessage;
-		this.contetn = contetn;
+		this.content = content;
 		this.date = date;
 	}
 
@@ -93,12 +92,12 @@ public class Message implements Serializable {
 		this.type = type;
 	}
 
-	public String getContetn() {
-		return contetn;
+	public String getContent() {
+		return content;
 	}
 
-	public void setContetn(String contetn) {
-		this.contetn = contetn;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public Date getDate() {
@@ -112,7 +111,7 @@ public class Message implements Serializable {
 	@Override
 	public String toString() {
 		return "Message [idMessage=" + idMessage + ", senderMessage=" + senderMessage + ", reciveMessage="
-				+ reciveMessage + ", type=" + type + ", contetn=" + contetn + ", date=" + date + "]";
+				+ reciveMessage + ", type=" + type + ", content=" + content + ", date=" + date + "]";
 	}
 
 }
