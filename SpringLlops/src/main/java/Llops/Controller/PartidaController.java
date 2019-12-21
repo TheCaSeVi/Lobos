@@ -142,7 +142,7 @@ public class PartidaController {
 
 	@GetMapping(path = "/getMorts")
 	@ResponseBody
-	private ArrayList<String> getMorts(@RequestParam int idPartida) {
+	private Iterable<Mort> getMorts(@RequestParam int idPartida) {
 
 		Optional<Partida> partidaOptional = partidaRepository.findById(idPartida);
 
@@ -151,15 +151,9 @@ public class PartidaController {
 
 		Partida partida = partidaOptional.get();
 
-		Set<Mort> morts = partida.getMortsPartida();
+		Iterable<Mort> morts = partida.getMortsPartida();
 
-		ArrayList<String> mor = new ArrayList<String>();
-
-		for (Mort m : morts) {
-			mor.add(m.toString());
-		}
-
-		return mor;
+		return morts;
 	}
 
 	@GetMapping(path = "/getXatLlops")
