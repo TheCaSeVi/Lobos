@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<!-- SQL Dialect. Usamos el 5 para poder hacer cosas chulas -->
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
+
+		<!-- Database Connection Settings -->
+		<property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+<!-- Especificar aqui la DB -->		
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/llop?createDatabaseIfNotExist=true&amp;serverTimezone=UTC</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">super3</property>
+<!-- Crea tablas automáticamente -->		
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		<property name="show_sql">true</property>
+
+		<!-- Specifying Session Context -->
+		<property name="hibernate.current_session_context_class">org.hibernate.context.internal.ThreadLocalSessionContext</property>
+
+<!-- Aqui van las clases que mapees. TODAS -->
+		<mapping class="Llops.DataBase.User" />
+		<mapping class="Llops.DataBase.Message" />
+		<mapping class="Llops.DataBase.Rol" />
+		<mapping class="Llops.DataBase.Partida" />
+		<mapping class="Llops.DataBase.RolJugadorPartida" />
+		<mapping class="Llops.DataBase.Mort" />
+		<mapping class="Llops.DataBase.XatMessage" />
+		<mapping class="Llops.DataBase.Vot" />
+		
+	</session-factory>
+</hibernate-configuration>
