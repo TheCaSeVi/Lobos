@@ -11,30 +11,27 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
-
 @Entity
 @Table(name = "rol")
-public class Rol implements Serializable{
+public class Rol implements Serializable {
 
 	@Id
 	@Column(name = "id_rol")
 	private String nom;
-	
+
 	@Column(name = "freq", nullable = false)
 	private int freq;
-	
+
 	@Column(name = "pathImg")
 	private String pathImg;
-	
-	
+
 	@Lob
-	@Column(name = "descripcio",nullable = false)
+	@Column(name = "descripcio", nullable = false)
 	private String descripcio;
 
-	@OneToMany(mappedBy="rol")
-	private Set<RolJugadorPartida>usersRolsPartida = new HashSet<RolJugadorPartida>();
-	
+	@OneToMany(mappedBy = "rol")
+	private Set<RolJugadorPartida> usersRolsPartida = new HashSet<RolJugadorPartida>();
+
 	public Rol() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -91,9 +88,8 @@ public class Rol implements Serializable{
 
 	@Override
 	public String toString() {
-		return nom;
+		return "Rol [nom=" + nom + ", freq=" + freq + ", pathImg=" + pathImg + ", descripcio=" + descripcio
+				+ ", usersRolsPartida=" + usersRolsPartida + "]";
 	}
-	
-
 
 }

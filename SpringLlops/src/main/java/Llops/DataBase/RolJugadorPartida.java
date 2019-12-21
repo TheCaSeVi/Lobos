@@ -1,6 +1,5 @@
 package Llops.DataBase;
 
-
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
@@ -15,32 +14,31 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-
 @Entity
 @Table(name = "rol_jugador_partida")
-public class RolJugadorPartida implements Serializable{
+public class RolJugadorPartida implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_rol_jugador_partida")
 	private int idUserRolPartida;
-	
-	@JoinColumn(name="id_user", nullable=false)
+
+	@JoinColumn(name = "id_user", nullable = false)
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonBackReference
 	private User user;
-	
-	@JoinColumn(name="id_rol", nullable=false)
+
+	@JoinColumn(name = "id_rol", nullable = false)
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonBackReference
 	private Rol rol;
-	
-	@JoinColumn(name="partida", nullable=false)
+
+	@JoinColumn(name = "partida", nullable = false)
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonBackReference
 	private Partida partida;
-	
-	@Column(name="mort")
+
+	@Column(name = "mort")
 	private boolean mort;
 
 	public RolJugadorPartida() {
@@ -88,8 +86,6 @@ public class RolJugadorPartida implements Serializable{
 		this.partida = partida;
 	}
 
-	
-	
 	public boolean getMort() {
 		return mort;
 	}
@@ -100,9 +96,8 @@ public class RolJugadorPartida implements Serializable{
 
 	@Override
 	public String toString() {
-		return String.valueOf(idUserRolPartida);
+		return "RolJugadorPartida [idUserRolPartida=" + idUserRolPartida + ", user=" + user + ", rol=" + rol
+				+ ", partida=" + partida + ", mort=" + mort + "]";
 	}
-	
 
-	
 }

@@ -19,55 +19,54 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "user")
-public class User implements Serializable{
+public class User implements Serializable {
 
-
-	
 	@Id
-	@Column(length=20,name = "id_user")
+	@Column(length = 20, name = "id_user")
 	private String userName;
-	
+
 	@Column(name = "password")
 	private String password;
-	
+
 	@Column(name = "alias")
 	private String alias;
-		
+
 	@Column(name = "path_avatar")
-	private String pathAvatar;	
-	
+	private String pathAvatar;
+
 	@Column(name = "percentatge_vict")
 	private double percentatgeVict;
-	
-	@OneToMany(mappedBy="senderMessage")
+
+	@OneToMany(mappedBy = "senderMessage")
 	@JsonBackReference
 	private Set<Message> sendsMessage = new HashSet<Message>();
-	
-	@OneToMany(mappedBy="reciveMessage")
+
+	@OneToMany(mappedBy = "reciveMessage")
 	@JsonBackReference
 	private Set<Message> recivesMessage = new HashSet<Message>();
-	
-	@OneToMany(mappedBy="senderVot")
+
+	@OneToMany(mappedBy = "senderVot")
 	@JsonBackReference
 	private Set<Vot> sendsVots = new HashSet<Vot>();
-	
-	@OneToMany(mappedBy="partidVot")
+
+	@OneToMany(mappedBy = "partidVot")
 	@JsonBackReference
 	private Set<Vot> recivesVots = new HashSet<Vot>();
-	
-	@ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(joinColumns={@JoinColumn(name="userName")}, inverseJoinColumns={@JoinColumn(name="idPartida")})
+
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(joinColumns = { @JoinColumn(name = "userName") }, inverseJoinColumns = {
+			@JoinColumn(name = "idPartida") })
 	private Set<Partida> partides = new HashSet<>();
-    
-	@OneToMany(mappedBy="user")
+
+	@OneToMany(mappedBy = "user")
 	@JsonBackReference
-	private Set<RolJugadorPartida>usersRolsPartida = new HashSet<RolJugadorPartida>();
-	
-	@OneToMany(mappedBy="senderXatMessage")
+	private Set<RolJugadorPartida> usersRolsPartida = new HashSet<RolJugadorPartida>();
+
+	@OneToMany(mappedBy = "senderXatMessage")
 	@JsonBackReference
 	private Set<XatMessage> sendsXatMessage = new HashSet<XatMessage>();
 
-	@OneToMany(mappedBy="userMort")
+	@OneToMany(mappedBy = "userMort")
 	@JsonBackReference
 	private Set<Mort> userMorts = new HashSet<Mort>();
 
@@ -76,10 +75,10 @@ public class User implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(String userName,String password) {
+	public User(String userName, String password) {
 		super();
 		this.userName = userName;
-		this.password=password;
+		this.password = password;
 	}
 
 	public String getUserName() {
@@ -89,7 +88,6 @@ public class User implements Serializable{
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	
 
 	public String getPassword() {
 		return password;
@@ -189,9 +187,11 @@ public class User implements Serializable{
 
 	@Override
 	public String toString() {
-		return userName;
+		return "User [userName=" + userName + ", password=" + password + ", alias=" + alias + ", pathAvatar="
+				+ pathAvatar + ", percentatgeVict=" + percentatgeVict + ", sendsMessage=" + sendsMessage
+				+ ", recivesMessage=" + recivesMessage + ", sendsVots=" + sendsVots + ", recivesVots=" + recivesVots
+				+ ", partides=" + partides + ", usersRolsPartida=" + usersRolsPartida + ", sendsXatMessage="
+				+ sendsXatMessage + ", userMorts=" + userMorts + "]";
 	}
 
-	
-	
 }

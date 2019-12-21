@@ -11,23 +11,24 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 @Entity
 @Table(name = "mort")
-public class Mort implements Serializable{
-	
+public class Mort implements Serializable {
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_mort")
 	private int idMort;
-	
-	@JoinColumn(name="user_mort", nullable=false)
+
+	@JoinColumn(name = "user_mort", nullable = false)
 	@ManyToOne(cascade = CascadeType.ALL)
 	private User userMort;
-	
-	@JoinColumn(name="partida_morts", nullable=false)
+
+	@JoinColumn(name = "partida_morts", nullable = false)
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Partida partidaMort;
-	
+
 	@Column(name = "torn_mort")
 	private int tornMort;
 
@@ -78,8 +79,8 @@ public class Mort implements Serializable{
 
 	@Override
 	public String toString() {
-		return String.valueOf(idMort);
+		return "Mort [idMort=" + idMort + ", userMort=" + userMort + ", partidaMort=" + partidaMort + ", tornMort="
+				+ tornMort + "]";
 	}
-	
-	
+
 }

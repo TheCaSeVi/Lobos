@@ -16,35 +16,33 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-
 @Entity
 @Table(name = "partida")
-public class Partida implements Serializable{
+public class Partida implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_partida")
 	private int idPartida;
-	
-	@ManyToMany(cascade = {CascadeType.ALL})
+
+	@ManyToMany(cascade = { CascadeType.ALL })
 	private Set<User> users = new HashSet<>();
-	
+
 	@Column(name = "torn")
 	private int torn;
-	
-	@OneToMany(mappedBy="partida")
-	@JsonBackReference
-	private Set<RolJugadorPartida>usersRolsPartida = new HashSet<RolJugadorPartida>();
-	
-	@OneToMany(mappedBy="partidaXatMessage")
-	private Set<XatMessage> partidaXat = new HashSet<XatMessage>();
-	
 
-	@OneToMany(mappedBy="idMort")
+	@OneToMany(mappedBy = "partida")
+	@JsonBackReference
+	private Set<RolJugadorPartida> usersRolsPartida = new HashSet<RolJugadorPartida>();
+
+	@OneToMany(mappedBy = "partidaXatMessage")
+	private Set<XatMessage> partidaXat = new HashSet<XatMessage>();
+
+	@OneToMany(mappedBy = "idMort")
 	@JsonBackReference
 	private Set<Mort> mortsPartida = new HashSet<Mort>();
-	
-	@OneToMany(mappedBy="partidVot")
+
+	@OneToMany(mappedBy = "partidVot")
 	@JsonBackReference
 	private Set<Vot> votsPartida = new HashSet<Vot>();
 
@@ -123,8 +121,9 @@ public class Partida implements Serializable{
 
 	@Override
 	public String toString() {
-		return String.valueOf(idPartida);
+		return "Partida [idPartida=" + idPartida + ", users=" + users + ", torn=" + torn + ", usersRolsPartida="
+				+ usersRolsPartida + ", partidaXat=" + partidaXat + ", mortsPartida=" + mortsPartida + ", votsPartida="
+				+ votsPartida + "]";
 	}
-		
-	
+
 }

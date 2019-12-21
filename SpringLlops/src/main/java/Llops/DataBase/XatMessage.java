@@ -15,24 +15,24 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "xatMessages")
-public class XatMessage implements Serializable{
+public class XatMessage implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_xat_message")
 	private int idXatMessage;
-	
-	@JoinColumn(name="sender_xat_message", nullable=false)
+
+	@JoinColumn(name = "sender_xat_message", nullable = false)
 	@ManyToOne(cascade = CascadeType.ALL)
 	private User senderXatMessage;
-	
-	@JoinColumn(name="partida_xat_message", nullable=false)
+
+	@JoinColumn(name = "partida_xat_message", nullable = false)
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Partida partidaXatMessage;
-	
+
 	@Column(name = "content")
-	private String contentXatMessage;	
-	
+	private String contentXatMessage;
+
 	@Column(name = "data")
 	private Date dataMessage;
 
@@ -41,8 +41,7 @@ public class XatMessage implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public XatMessage(User senderXatMessage, Partida partidaXatMessage, String contentXatMessage,
-			Date dataMessage) {
+	public XatMessage(User senderXatMessage, Partida partidaXatMessage, String contentXatMessage, Date dataMessage) {
 		super();
 		this.senderXatMessage = senderXatMessage;
 		this.partidaXatMessage = partidaXatMessage;
@@ -92,7 +91,9 @@ public class XatMessage implements Serializable{
 
 	@Override
 	public String toString() {
-		return String.valueOf(idXatMessage);
+		return "XatMessage [idXatMessage=" + idXatMessage + ", senderXatMessage=" + senderXatMessage
+				+ ", partidaXatMessage=" + partidaXatMessage + ", contentXatMessage=" + contentXatMessage
+				+ ", dataMessage=" + dataMessage + "]";
 	}
-	
+
 }
