@@ -1,6 +1,5 @@
 package Llops.Controller;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import Llops.DataBase.*;
 import Llops.Repos.*;
 
@@ -22,19 +19,33 @@ import Llops.Repos.*;
 public class PartidaController {
 
 	@Autowired
-	private VotRepository votRepo;
-	@Autowired
 	private PartidaRepository partidaRepository;
 	@Autowired
-	private XatMessageRepository xatMessageRepository;
+	private RolRepository rolRepository;
 
-	// inici
+	@GetMapping(path = "/inici")
+	@ResponseBody
+	private void inici(@RequestParam int idPartida) {
+		Optional<Partida> partidaOptional = partidaRepository.findById(idPartida);
 
-	// fi torn
+		if (partidaOptional.isPresent()) {
+
+			Iterable<Rol> rols = rolRepository.findAll();
+
+			Partida partida = partidaOptional.get();
+
+		}
+
+	}
+
+	@GetMapping(path = "/fiTorn")
+	@ResponseBody
+	private void fiTorn(@RequestParam int idPartida) {
+
+	}
 
 	@GetMapping(path = "/getHistorial")
 	@ResponseBody
-	//
 	private Iterable<Vot> getHistorial(@RequestParam int idPartida, @RequestParam int torn) {
 		Optional<Partida> partidaOptional = partidaRepository.findById(idPartida);
 

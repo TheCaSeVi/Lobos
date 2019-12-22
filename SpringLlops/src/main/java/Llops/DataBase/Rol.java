@@ -37,13 +37,12 @@ public class Rol implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Rol(String nom, int freq, String pathImg, String descripcio, Set<RolJugadorPartida> usersRolsPartida) {
+	public Rol(String nom, int freq, String pathImg, String descripcio) {
 		super();
 		this.nom = nom;
 		this.freq = freq;
 		this.pathImg = pathImg;
 		this.descripcio = descripcio;
-		this.usersRolsPartida = usersRolsPartida;
 	}
 
 	public String getNom() {
