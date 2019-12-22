@@ -31,7 +31,7 @@ public class Main {
 			Vot v = new Vot();
 			XatMessage xm = new XatMessage();
 			Mort mort = new Mort();
-			
+
 			u.setUserName("que asco de vida");
 			m.setReciveMessage(u);
 			m.setSenderMessage(u);
@@ -47,7 +47,7 @@ public class Main {
 			xm.setSenderXatMessage(u);
 			mort.setPartidaMort(p);
 			mort.setUserMort(u);
-			
+
 			session.saveOrUpdate(u);
 			session.saveOrUpdate(p);
 			session.saveOrUpdate(m);
@@ -56,8 +56,7 @@ public class Main {
 			session.saveOrUpdate(v);
 			session.saveOrUpdate(xm);
 			session.saveOrUpdate(mort);
-			
-			
+
 			session.getTransaction().commit();
 			System.out.println("todo ha salido a pedir de Milhouse");
 

@@ -1,7 +1,9 @@
 package Llops.Controller;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,119 @@ public class PartidaController {
 
 			Iterable<Rol> rols = rolRepository.findAll();
 
+			Random rand = new Random();
+
 			Partida partida = partidaOptional.get();
+
+			Rol llop = new Rol();
+			Rol vilata = new Rol();
+			Rol angel = new Rol();
+			Rol caçador = new Rol();
+			Rol alcalde = new Rol();
+			Rol enamorat = new Rol();
+
+			for (Rol rol : rols) {
+
+				if ("llop".equalsIgnoreCase(rol.getNom())) {
+
+					llop = rol;
+
+				}
+
+				if ("vilata".equalsIgnoreCase(rol.getNom())) {
+
+					vilata = rol;
+
+				}
+
+				if ("angel".equalsIgnoreCase(rol.getNom())) {
+
+					angel = rol;
+
+				}
+
+				if ("caçador".equalsIgnoreCase(rol.getNom())) {
+
+					caçador = rol;
+
+				}
+
+				if ("alcalde".equalsIgnoreCase(rol.getNom())) {
+
+					alcalde = rol;
+
+				}
+
+				if ("enamorat".equalsIgnoreCase(rol.getNom())) {
+
+					enamorat = rol;
+
+				}
+
+			}
+
+			Set<RolJugadorPartida> rolJugadorPartidas = partida.getUsersRolsPartida();
+
+			int numLlops = rolJugadorPartidas.size() / llop.getFreq();
+
+			ArrayList<Rol> roles = new ArrayList<Rol>();
+
+			for (int i = 0; i < numLlops; i++) {
+				roles.add(llop);
+			}
+
+			if (!angel.getNom().isEmpty()) {
+
+				for (int i = 0; i < angel.getFreq(); i++) {
+					roles.add(angel);
+				}
+
+			}
+
+			if (!alcalde.getNom().isEmpty()) {
+
+				for (int i = 0; i < alcalde.getFreq(); i++) {
+					roles.add(alcalde);
+				}
+
+			}
+
+			if (!caçador.getNom().isEmpty()) {
+
+				for (int i = 0; i < caçador.getFreq(); i++) {
+					roles.add(caçador);
+				}
+
+			}
+
+			if (!enamorat.getNom().isEmpty()) {
+
+				for (int i = 0; i < enamorat.getFreq(); i++) {
+					roles.add(enamorat);
+				}
+
+			}
+
+			for (RolJugadorPartida rolJugadorPartida : rolJugadorPartidas) {
+
+				if (roles.size() > 0) {
+
+					int numRand = rand.nextInt(roles.size());
+
+					rolJugadorPartida.setRol(roles.get(numRand));
+
+					roles.remove(numRand);
+
+				} else {
+
+					rolJugadorPartida.setRol(vilata);
+
+				}
+
+			}
+
+			partida.setUsersRolsPartida(rolJugadorPartidas);
+			partidaRepository.save(partida);
 
 		}
 
