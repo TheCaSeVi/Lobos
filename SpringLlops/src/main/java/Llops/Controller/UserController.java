@@ -41,9 +41,9 @@ public class UserController {
 	@Autowired
 	private XatMessageRepository xatMessageRepository;
 
-	@GetMapping(path = "/getMessages")
+	@GetMapping(path = "/getMissatges")
 	@ResponseBody
-	private Iterable<Message> getMessages(@RequestParam String userName) {
+	private Iterable<Message> getMissatges(@RequestParam String userName) {
 
 		Optional<User> userOptional = userRepository.findById(userName);
 
@@ -175,12 +175,12 @@ public class UserController {
 
 	@GetMapping(path = "/vota")
 	@ResponseBody
-	private String vota(@RequestParam String idSender, @RequestParam String idReciver, @RequestParam int idPartida,
-			@RequestParam int torn) {
+	private String vota(@RequestParam String usernameSender, @RequestParam String usernameReceiver,
+			@RequestParam int idPartida, @RequestParam int torn) { // Este metodo está mal, hay que cambiarlo
 
-		Optional<User> senderOptional = userRepository.findById(idSender);
+		Optional<User> senderOptional = userRepository.findById(usernameSender);
 
-		Optional<User> reciverOptional = userRepository.findById(idReciver);
+		Optional<User> reciverOptional = userRepository.findById(usernameReceiver);
 
 		Optional<Partida> partidaOptional = partidaRepository.findById(idPartida);
 
@@ -274,7 +274,7 @@ public class UserController {
 
 	@GetMapping(path = "/enviaMissatge")
 	@ResponseBody
-	private String enviaMessage(@RequestParam String content, @RequestParam String usernameSender,
+	private String enviaMissatge(@RequestParam String content, @RequestParam String usernameSender,
 			@RequestParam String usernameReceiver, @RequestParam TypeMessage type) {
 
 		Optional<User> senderOptional = userRepository.findById(usernameSender);
