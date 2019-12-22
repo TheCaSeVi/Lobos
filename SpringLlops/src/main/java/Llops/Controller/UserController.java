@@ -43,7 +43,7 @@ public class UserController {
 
 	@GetMapping(path = "/getMessages")
 	@ResponseBody
-	private ArrayList<String> getMessages(@RequestParam String userName) {
+	private Iterable<Message> getMessages(@RequestParam String userName) {
 
 		Optional<User> userOptional = userRepository.findById(userName);
 
@@ -56,17 +56,11 @@ public class UserController {
 
 		Set<Message> messagesRecives = user.getRecivesMessage();
 
-		ArrayList<String> messages = new ArrayList<String>();
 
-		for (Message m : messagesSends) {
-			messages.add(m.toString());
-		}
 
-		for (Message m : messagesRecives) {
-			messages.add(m.toString());
-		}
+		messagesSends.addAll(messagesRecives);
 
-		return messages;
+		return messagesSends;
 	}
 
 	@GetMapping(path = "/registre")
