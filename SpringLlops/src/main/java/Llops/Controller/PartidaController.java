@@ -44,8 +44,15 @@ public class PartidaController {
 		Partida partida = partidaOptional.get();
 
 		Iterable<Vot> votsPartida = partida.getVotsPartida();
+		Set<Vot> votsPartidaReturn = new HashSet<Vot>();
 
-		return votsPartida;
+		for (Vot vot : votsPartida) {
+			if (vot.getTornVot() == torn) {
+				votsPartidaReturn.add(vot);
+			}
+		}
+
+		return votsPartidaReturn;
 
 	}
 
