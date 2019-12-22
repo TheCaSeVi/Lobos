@@ -321,9 +321,9 @@ public class UserController {
 
 	}
 
-	@GetMapping(path = "/escriuMessageXat")
+	@GetMapping(path = "/escriuMissatgeXat")
 	@ResponseBody
-	private String escriuMessageXat(@RequestParam String message, @RequestParam String idSender,
+	private String escriuMissatgeXat(@RequestParam String message, @RequestParam String idSender,
 			@RequestParam int idPartida) {
 
 		Optional<User> senderOptional = userRepository.findById(idSender);
@@ -375,9 +375,9 @@ public class UserController {
 			return "No s'ha pogut escriur el missatge";
 	}
 
-	@GetMapping(path = "/escriuMessageLlop")
+	@GetMapping(path = "/escriuMissatgeLlop")
 	@ResponseBody
-	private String escriuMessageLlop(@RequestParam String message, @RequestParam String idSender,
+	private String escriuMissatgeLlop(@RequestParam String message, @RequestParam String idSender,
 			@RequestParam int idPartida) {
 
 		Optional<User> senderOptional = userRepository.findById(idSender);
