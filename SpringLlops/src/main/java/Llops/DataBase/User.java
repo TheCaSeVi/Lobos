@@ -75,10 +75,12 @@ public class User implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(String userName, String password) {
+	public User(String userName, String password, String alias, String pathAvatar) {
 		super();
 		this.userName = userName;
 		this.password = password;
+		this.alias = alias;
+		this.pathAvatar = pathAvatar;
 	}
 
 	public String getUserName() {

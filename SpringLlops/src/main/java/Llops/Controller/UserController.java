@@ -56,8 +56,6 @@ public class UserController {
 
 		Set<Message> messagesRecives = user.getRecivesMessage();
 
-
-
 		messagesSends.addAll(messagesRecives);
 
 		return messagesSends;
@@ -65,8 +63,8 @@ public class UserController {
 
 	@GetMapping(path = "/registre")
 	@ResponseBody
-	private String registre(@RequestParam String userName, @RequestParam String password)
-			throws NoSuchAlgorithmException {
+	private String registre(@RequestParam String userName, @RequestParam String password, @RequestParam String alias,
+			@RequestParam String pathAvatar) throws NoSuchAlgorithmException {
 
 		Optional<User> optUser = userRepository.findById(userName);
 
@@ -75,7 +73,7 @@ public class UserController {
 		else {
 
 			String hashPass = hashPass(userName, password);
-			User user = new User(userName, hashPass);
+			User user = new User(userName, hashPass, alias, pathAvatar);
 			userRepository.save(user);
 			optUser = userRepository.findById(userName);
 			if (optUser.isPresent())
