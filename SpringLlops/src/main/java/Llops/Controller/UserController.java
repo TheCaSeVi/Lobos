@@ -51,21 +51,21 @@ public class UserController {
 			return null;
 
 		User user = userOptional.get();
-		
+
 		Set<Message> messagesSends = user.getSendsMessage();
-		
+
 		Set<Message> messagesRecives = user.getRecivesMessage();
-		
+
 		ArrayList<String> messages = new ArrayList<String>();
-		
+
 		for (Message m : messagesSends) {
 			messages.add(m.toString());
 		}
-		
+
 		for (Message m : messagesRecives) {
-			messages.add(m.toString());			
+			messages.add(m.toString());
 		}
-		
+
 		return messages;
 	}
 
@@ -118,13 +118,13 @@ public class UserController {
 
 	@GetMapping(path = "/unirse")
 	@ResponseBody
-	private String unirse(@RequestParam int id_partida, @RequestParam String userName) {
+	private String unirse(@RequestParam int idPartida, @RequestParam String userName) {
 
 		String string = "";
 
 		Optional<User> userOptional = userRepository.findById(userName);
 
-		Optional<Partida> partidaOptional = partidaRepository.findById(id_partida);
+		Optional<Partida> partidaOptional = partidaRepository.findById(idPartida);
 
 		if (!userOptional.isPresent())
 			return "No s'ha trobat l'usuari";
@@ -183,14 +183,14 @@ public class UserController {
 
 	@GetMapping(path = "/vota")
 	@ResponseBody
-	private String vota(@RequestParam String id_sender, @RequestParam String id_reciver, @RequestParam int id_partida,
+	private String vota(@RequestParam String idSender, @RequestParam String idReciver, @RequestParam int idPartida,
 			@RequestParam int torn) {
 
-		Optional<User> senderOptional = userRepository.findById(id_sender);
+		Optional<User> senderOptional = userRepository.findById(idSender);
 
-		Optional<User> reciverOptional = userRepository.findById(id_reciver);
+		Optional<User> reciverOptional = userRepository.findById(idReciver);
 
-		Optional<Partida> partidaOptional = partidaRepository.findById(id_partida);
+		Optional<Partida> partidaOptional = partidaRepository.findById(idPartida);
 
 		if (!senderOptional.isPresent())
 			return "No s'ha trobat l'usuari que l'envia";
@@ -245,11 +245,11 @@ public class UserController {
 
 	@GetMapping(path = "/descobrirRol")
 	@ResponseBody
-	private String descobrirRol(@RequestParam String userName, @RequestParam int id_partida) {
+	private String descobrirRol(@RequestParam String userName, @RequestParam int idPartida) {
 
 		Optional<User> userOptional = userRepository.findById(userName);
 
-		Optional<Partida> partidaOptional = partidaRepository.findById(id_partida);
+		Optional<Partida> partidaOptional = partidaRepository.findById(idPartida);
 
 		if (!userOptional.isPresent())
 			return "No s'ha trobat l'usuari";
@@ -282,12 +282,12 @@ public class UserController {
 
 	@GetMapping(path = "/enviaMessage")
 	@ResponseBody
-	private String enviaMessage(@RequestParam String message, @RequestParam String id_sender,
-			@RequestParam String id_reciver, @RequestParam TypeMessage type) {
+	private String enviaMessage(@RequestParam String message, @RequestParam String idSender,
+			@RequestParam String idReciver, @RequestParam TypeMessage type) {
 
-		Optional<User> senderOptional = userRepository.findById(id_sender);
+		Optional<User> senderOptional = userRepository.findById(idSender);
 
-		Optional<User> reciverOptional = userRepository.findById(id_reciver);
+		Optional<User> reciverOptional = userRepository.findById(idReciver);
 
 		if (!senderOptional.isPresent())
 			return "No s'ha trobat l'usuari que l'envia";
@@ -331,12 +331,12 @@ public class UserController {
 
 	@GetMapping(path = "/escriuMessageXat")
 	@ResponseBody
-	private String escriuMessageXat(@RequestParam String message, @RequestParam String id_sender,
-			@RequestParam int id_partida) {
+	private String escriuMessageXat(@RequestParam String message, @RequestParam String idSender,
+			@RequestParam int idPartida) {
 
-		Optional<User> senderOptional = userRepository.findById(id_sender);
+		Optional<User> senderOptional = userRepository.findById(idSender);
 
-		Optional<Partida> partidaOptional = partidaRepository.findById(id_partida);
+		Optional<Partida> partidaOptional = partidaRepository.findById(idPartida);
 
 		if (!senderOptional.isPresent())
 			return "No s'ha trobat l'usuari que l'envia";
@@ -385,15 +385,15 @@ public class UserController {
 
 	@GetMapping(path = "/escriuMessageLlop")
 	@ResponseBody
-	private String escriuMessageLlop(@RequestParam String message, @RequestParam String id_sender,
-			@RequestParam int id_partida) {
+	private String escriuMessageLlop(@RequestParam String message, @RequestParam String idSender,
+			@RequestParam int idPartida) {
 
-		Optional<User> senderOptional = userRepository.findById(id_sender);
+		Optional<User> senderOptional = userRepository.findById(idSender);
 
 		if (!senderOptional.isPresent())
 			return "N'ho s'ha trobat l'usuari que l'envia";
 
-		Optional<Partida> partidaOptional = partidaRepository.findById(id_partida);
+		Optional<Partida> partidaOptional = partidaRepository.findById(idPartida);
 
 		if (!partidaOptional.isPresent())
 			return "No s'ha trobat la partida";
