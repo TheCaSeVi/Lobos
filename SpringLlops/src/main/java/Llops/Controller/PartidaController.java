@@ -67,7 +67,7 @@ public class PartidaController {
 
 	@GetMapping(path = "/jugadorsVius")
 	@ResponseBody
-	private ArrayList<String> jugadorsVius(@RequestParam int idPartida) {
+	private Iterable<User> jugadorsVius(@RequestParam int idPartida) {
 
 		Optional<Partida> partidaOptional = partidaRepository.findById(idPartida);
 
@@ -76,31 +76,25 @@ public class PartidaController {
 
 		Partida partida = partidaOptional.get();
 
-		Set<Mort> morts = partida.getMortsPartida();
-
-		Set<User> users = partida.getUsers();
+		Set<RolJugadorPartida> rolJugadorPartida = partida.getUsersRolsPartida();
 
 		Set<User> vius = new HashSet<User>();
 
-		for (User user : users) {
-			for (Mort mort : morts) {
-				if (!user.getUserName().equals(mort.getUserMort().getUserName())) // Creo que esto está mal
-					vius.add(user);
+		for (RolJugadorPartida user : rolJugadorPartida) {
+			if (user.getPartida().getIdPartida() == idPartida && !user.getMort()) {
+
+				vius.add(user.getUser());
+
 			}
 		}
 
-		ArrayList<String> jVius = new ArrayList<String>();
+		return vius;
 
-		for (User jvius : vius) {
-			jVius.add(jvius.toString());
-		}
-
-		return jVius;
 	}
 
 	@GetMapping(path = "/rolsVius")
 	@ResponseBody
-	private ArrayList<String> rolsVius(@RequestParam int idPartida) {
+	private Iterable<Rol> rolsVius(@RequestParam int idPartida) {
 
 		Optional<Partida> partidaOptional = partidaRepository.findById(idPartida);
 
@@ -109,34 +103,17 @@ public class PartidaController {
 
 		Partida partida = partidaOptional.get();
 
-		Set<Mort> morts = partida.getMortsPartida();
+		Set<RolJugadorPartida> rolJugadorPartida = partida.getUsersRolsPartida();
 
-		Set<User> users = partida.getUsers();
+		Set<Rol> rols = new HashSet<Rol>();
 
-		Set<Rol> rolsVius = new HashSet<Rol>();
-
-		for (User user : users) {
-			for (Mort mort : morts) {
-				if (!user.getUserName().equals(mort.getUserMort().getUserName())) { // Creo que esto está mal
-					Set<RolJugadorPartida> rolsjugador = user.getUsersRolsPartida();
-
-					for (RolJugadorPartida rolJugadorPartida : rolsjugador) {
-						if (rolJugadorPartida.getPartida().equals(partida)) {
-							rolsVius.add(rolJugadorPartida.getRol());
-							break;
-						}
-					}
-				}
+		for (RolJugadorPartida user : rolJugadorPartida) {
+			if (user.getPartida().getIdPartida() == idPartida) {
+				rols.add(user.getRol());
 			}
 		}
 
-		ArrayList<String> rVius = new ArrayList<String>();
-
-		for (Rol rvius : rolsVius) {
-			rVius.add(rvius.toString());
-		}
-
-		return rVius;
+		return rols;
 
 	}
 
@@ -158,7 +135,7 @@ public class PartidaController {
 
 	@GetMapping(path = "/getXatLlops")
 	@ResponseBody
-	private ArrayList<String> getXatLlops(@RequestParam int idPartida) {
+	private Iterable<XatMessage> getXatLlops(@RequestParam int idPartida) {
 
 		Optional<Partida> partidaOptional = partidaRepository.findById(idPartida);
 
@@ -166,8 +143,6 @@ public class PartidaController {
 			return null;
 
 		Partida partida = partidaOptional.get();
-
-		Set<User> users = partida.getUsers();
 
 		Set<XatMessage> xat = partida.getPartidaXat();
 
@@ -178,20 +153,14 @@ public class PartidaController {
 			Set<RolJugadorPartida> rolsjugador = userXat.getUsersRolsPartida();
 			for (RolJugadorPartida rolJugadorPartida : rolsjugador) {
 				if (rolJugadorPartida.getPartida().equals(partida)
-						&& "llop".equals(rolJugadorPartida.getRol().getDescripcio())) { // Creo que esto está mal
+						&& "llop".equalsIgnoreCase(rolJugadorPartida.getRol().getNom())) {
 					xatLlops.add(xatMessage);
 					break;
 				}
 			}
 		}
 
-		ArrayList<String> xLlops = new ArrayList<String>();
-
-		for (XatMessage xm : xatLlops) {
-			xLlops.add(xm.toString());
-		}
-
-		return xLlops;
+		return xatLlops;
 
 	}
 

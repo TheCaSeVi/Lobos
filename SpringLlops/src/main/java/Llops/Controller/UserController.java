@@ -403,11 +403,11 @@ public class UserController {
 		Partida partida = partidaOptional.get();
 
 		Set<XatMessage> xatPartida = partida.getPartidaXat();
-		Set<RolJugadorPartida> rolsPartia = sender.getUsersRolsPartida();
+		Set<RolJugadorPartida> rolsPartida = sender.getUsersRolsPartida();
 		Set<XatMessage> xatsSender = sender.getSendsXatMessage();
 
 		// return in this for
-		for (RolJugadorPartida rolJugadorPartida : rolsPartia) {
+		for (RolJugadorPartida rolJugadorPartida : rolsPartida) {
 
 			Partida pa = rolJugadorPartida.getPartida();
 			User u = rolJugadorPartida.getUser();
