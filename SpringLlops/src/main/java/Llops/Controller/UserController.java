@@ -272,14 +272,14 @@ public class UserController {
 
 	}
 
-	@GetMapping(path = "/enviaMessage")
+	@GetMapping(path = "/enviaMissatge")
 	@ResponseBody
-	private String enviaMessage(@RequestParam String message, @RequestParam String idSender,
-			@RequestParam String idReciver, @RequestParam TypeMessage type) {
+	private String enviaMessage(@RequestParam String content, @RequestParam String usernameSender,
+			@RequestParam String usernameReceiver, @RequestParam TypeMessage type) {
 
-		Optional<User> senderOptional = userRepository.findById(idSender);
+		Optional<User> senderOptional = userRepository.findById(usernameSender);
 
-		Optional<User> reciverOptional = userRepository.findById(idReciver);
+		Optional<User> reciverOptional = userRepository.findById(usernameReceiver);
 
 		if (!senderOptional.isPresent())
 			return "No s'ha trobat l'usuari que l'envia";
@@ -295,7 +295,7 @@ public class UserController {
 
 			Date date = new Date(System.currentTimeMillis());
 
-			Message newMessage = new Message(sender, reciver, message, date);
+			Message newMessage = new Message(sender, reciver, content, date);
 
 			newMessage.setType(type);
 
