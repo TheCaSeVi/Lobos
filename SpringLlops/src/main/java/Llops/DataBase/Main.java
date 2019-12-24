@@ -1,5 +1,8 @@
 package Llops.DataBase;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,38 +27,31 @@ public class Main {
 			session.beginTransaction();
 
 			Partida p = new Partida();
-			User u = new User();
-			Message m = new Message();
-			Rol r = new Rol();
-			RolJugadorPartida rj = new RolJugadorPartida();
-			Vot v = new Vot();
-			XatMessage xm = new XatMessage();
-			Mort mort = new Mort();
+			p.setTorn(0);
 
-			u.setUserName("que asco de vida");
-			m.setReciveMessage(u);
-			m.setSenderMessage(u);
-			r.setNom("comePollas");
-			r.setDescripcio("comes muchas pollas");
-			rj.setPartida(p);
-			rj.setRol(r);
-			rj.setUser(u);
-			v.setReciverVot(u);
-			v.setSenderVot(u);
-			v.setPartidVot(p);
-			xm.setPartidaXatMessage(p);
-			xm.setSenderXatMessage(u);
-			mort.setPartidaMort(p);
-			mort.setUserMort(u);
+			// Roles
+			Rol lobo = new Rol("llop", 4, "", "");
+			Rol alcalde = new Rol("alcalde", 1, "", "");
+			Rol vilata = new Rol("vilata", 1, "", "");
+			Rol vident = new Rol("vident", 1, "", "");
 
-			session.saveOrUpdate(u);
+			// Usuarios
+			User carlos = new User("Carlos", hashPass("Carlos", "1234"), "TheCaSeVi", "pathImage");
+			User adri = new User("Adrian", hashPass("Adrian", "1234"), "Adri", "pathImage");
+			User victor = new User("Victor", hashPass("Victor", "1234"), "Vic", "pathImage");
+
+			// Save de roles
+			session.saveOrUpdate(lobo);
+			session.saveOrUpdate(alcalde);
+			session.saveOrUpdate(vilata);
+			session.saveOrUpdate(vident);
+
+			// Save de usuarios
+			session.saveOrUpdate(carlos);
+			session.saveOrUpdate(adri);
+			session.saveOrUpdate(victor);
+
 			session.saveOrUpdate(p);
-			session.saveOrUpdate(m);
-			session.saveOrUpdate(r);
-			session.saveOrUpdate(rj);
-			session.saveOrUpdate(v);
-			session.saveOrUpdate(xm);
-			session.saveOrUpdate(mort);
 
 			session.getTransaction().commit();
 			System.out.println("todo ha salido a pedir de Milhouse");
@@ -86,6 +82,26 @@ public class Main {
 			sessionFactory = new MetadataSources(serviceRegistry).buildMetadata().buildSessionFactory();
 		}
 		return sessionFactory;
+	}
+
+	private static String hashPass(String userName, String password) throws NoSuchAlgorithmException {
+
+		String passForHash = password + userName;
+
+		MessageDigest md = MessageDigest.getInstance("SHA1");
+
+		byte[] messageDigest = md.digest(passForHash.getBytes());
+
+		BigInteger bg = new BigInteger(1, messageDigest);
+
+		String hashPass = bg.toString(16);
+
+		while (hashPass.length() < 32) {
+
+			hashPass = "0" + hashPass;
+
+		}
+		return hashPass;
 	}
 
 }

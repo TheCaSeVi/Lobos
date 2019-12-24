@@ -1,7 +1,10 @@
 package Llops.Controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
@@ -24,6 +27,8 @@ public class PartidaController {
 	private PartidaRepository partidaRepository;
 	@Autowired
 	private RolRepository rolRepository;
+	@Autowired
+	private RolJugadorPartidaRepository rolJugadorPartidaRepository;
 
 	@GetMapping(path = "/inici")
 	@ResponseBody
@@ -44,6 +49,7 @@ public class PartidaController {
 			Rol caçador = new Rol();
 			Rol alcalde = new Rol();
 			Rol enamorat = new Rol();
+			Rol vident = new Rol();
 
 			for (Rol rol : rols) {
 
@@ -80,6 +86,12 @@ public class PartidaController {
 				if ("enamorat".equalsIgnoreCase(rol.getNom())) {
 
 					enamorat = rol;
+
+				}
+
+				if ("vident".equalsIgnoreCase(rol.getNom())) {
+
+					vident = rol;
 
 				}
 
@@ -127,6 +139,14 @@ public class PartidaController {
 
 			}
 
+			if (!vident.getNom().isEmpty()) {
+
+				for (int i = 0; i < vident.getFreq(); i++) {
+					roles.add(vident);
+				}
+
+			}
+
 			for (RolJugadorPartida rolJugadorPartida : rolJugadorPartidas) {
 
 				if (roles.size() > 0) {
@@ -154,7 +174,99 @@ public class PartidaController {
 
 	@GetMapping(path = "/fiTorn")
 	@ResponseBody
-	private void fiTorn(@RequestParam int idPartida) {
+	private void fiTorn(@RequestParam int idPartida, @RequestParam int torn) {
+
+		Optional<Partida> partidaOptional = partidaRepository.findById(idPartida);
+
+		if (partidaOptional.isPresent()) {
+
+			Partida partida = partidaOptional.get();
+
+			Set<Vot> vots = partida.getVotsPartida();
+
+			Map<User, Integer> userVots = new HashMap<User, Integer>();
+
+			if (torn % 2 == 0) {
+
+				for (Vot vot : vots) {
+
+					Boolean isAlcalde = false;
+
+					User votat = vot.getReciverVot();
+
+					Set<RolJugadorPartida> rolJugadorPartidas = votat.getUsersRolsPartida();
+
+					for (RolJugadorPartida rolJugadorPartida : rolJugadorPartidas) {
+
+						Partida partidaJugador = rolJugadorPartida.getPartida();
+
+						if (partidaJugador.getIdPartida() == idPartida
+								&& "alcalde".equalsIgnoreCase(rolJugadorPartida.getRol().getNom())) {
+							isAlcalde = true;
+						}
+
+					}
+
+					if (userVots.containsKey(votat)) {
+
+						if (isAlcalde) {
+							userVots.put(votat, userVots.get(votat) + 2);
+						} else {
+							userVots.put(votat, userVots.get(votat) + 1);
+						}
+
+					} else {
+
+						if (isAlcalde) {
+							userVots.put(votat, 2);
+						} else {
+							userVots.put(votat, 1);
+						}
+
+					}
+
+				}
+
+				User userMort = null;
+
+				int numVots = 0;
+
+				for (Map.Entry<User, Integer> entry : userVots.entrySet()) {
+
+					if (entry.getValue() > numVots) {
+
+						userMort = entry.getKey();
+						numVots = entry.getValue();
+
+					}
+
+				}
+
+				Set<RolJugadorPartida> rolJugadorPartidas = userMort.getUsersRolsPartida();
+
+				for (RolJugadorPartida rolJugadorPartida : rolJugadorPartidas) {
+
+					if (rolJugadorPartida.getPartida().getIdPartida() == idPartida) {
+
+						rolJugadorPartida.setMort(true);
+
+						rolJugadorPartidaRepository.save(rolJugadorPartida);
+
+						break;
+
+					}
+
+				}
+
+			} else {
+
+			}
+
+			partida.setTorn(partida.getTorn() + 1);
+
+			partidaRepository.save(partida);
+
+		}
 
 	}
 
