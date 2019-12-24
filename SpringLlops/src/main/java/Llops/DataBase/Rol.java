@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class Rol implements Serializable {
 
 	@Id
-	@Column(name = "id_rol")
+	@Column(length = 20, name = "id_rol")
 	private String nom;
 
 	@Column(name = "freq", nullable = false)
