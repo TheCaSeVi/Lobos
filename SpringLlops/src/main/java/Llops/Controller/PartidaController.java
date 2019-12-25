@@ -227,38 +227,65 @@ public class PartidaController {
 
 				}
 
-				User userMort = null;
-
-				int numVots = 0;
-
-				for (Map.Entry<User, Integer> entry : userVots.entrySet()) {
-
-					if (entry.getValue() > numVots) {
-
-						userMort = entry.getKey();
-						numVots = entry.getValue();
-
-					}
-
-				}
-
-				Set<RolJugadorPartida> rolJugadorPartidas = userMort.getUsersRolsPartida();
-
-				for (RolJugadorPartida rolJugadorPartida : rolJugadorPartidas) {
-
-					if (rolJugadorPartida.getPartida().getIdPartida() == idPartida) {
-
-						rolJugadorPartida.setMort(true);
-
-						rolJugadorPartidaRepository.save(rolJugadorPartida);
-
-						break;
-
-					}
-
-				}
-
 			} else {
+
+				for (Vot vot : vots) {
+
+					Set<RolJugadorPartida> rolJugadorPartidas = vot.getSenderVot().getUsersRolsPartida();
+
+					for (RolJugadorPartida rolJugadorPartida : rolJugadorPartidas) {
+
+						if (rolJugadorPartida.getPartida().getIdPartida() == idPartida
+								&& "llop".equalsIgnoreCase(rolJugadorPartida.getRol().getNom())) {
+
+							User votat = vot.getReciverVot();
+
+							if (userVots.containsKey(votat)) {
+
+								userVots.put(votat, userVots.get(votat) + 1);
+
+							} else {
+
+								userVots.put(votat, 1);
+
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+
+			User userMort = null;
+
+			int numVots = 0;
+
+			for (Map.Entry<User, Integer> entry : userVots.entrySet()) {
+
+				if (entry.getValue() > numVots) {
+
+					userMort = entry.getKey();
+					numVots = entry.getValue();
+
+				}
+
+			}
+
+			Set<RolJugadorPartida> rolJugadorPartidas = userMort.getUsersRolsPartida();
+
+			for (RolJugadorPartida rolJugadorPartida : rolJugadorPartidas) {
+
+				if (rolJugadorPartida.getPartida().getIdPartida() == idPartida) {
+
+					rolJugadorPartida.setMort(true);
+
+					rolJugadorPartidaRepository.save(rolJugadorPartida);
+
+					break;
+
+				}
 
 			}
 
