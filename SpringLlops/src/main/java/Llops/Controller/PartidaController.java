@@ -174,7 +174,7 @@ public class PartidaController {
 
 	@GetMapping(path = "/fiTorn")
 	@ResponseBody
-	private void fiTorn(@RequestParam int idPartida, @RequestParam int torn) {
+	private String fiTorn(@RequestParam int idPartida, @RequestParam int torn) {
 
 		Optional<Partida> partidaOptional = partidaRepository.findById(idPartida);
 
@@ -185,6 +185,8 @@ public class PartidaController {
 			Set<Vot> vots = partida.getVotsPartida();
 
 			Map<User, Integer> userVots = new HashMap<User, Integer>();
+
+			User votVident = null;
 
 			if (torn % 2 == 0) {
 
@@ -252,6 +254,15 @@ public class PartidaController {
 
 						}
 
+						if (rolJugadorPartida.getPartida().getIdPartida() == idPartida
+								&& "vident".equalsIgnoreCase(rolJugadorPartida.getRol().getNom())) {
+
+							User votat = vot.getReciverVot();
+
+							votVident = votat;
+
+						}
+
 					}
 
 				}
@@ -293,7 +304,15 @@ public class PartidaController {
 
 			partidaRepository.save(partida);
 
+			if (votVident != null) {
+
+				return votVident.toString();
+
+			}
+
 		}
+
+		return "";
 
 	}
 
