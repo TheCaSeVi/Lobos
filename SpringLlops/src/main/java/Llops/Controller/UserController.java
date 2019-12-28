@@ -141,25 +141,31 @@ public class UserController {
 
 		} else {
 
+			Boolean estaPartida = false;
+
 			for (User userPartida : usersPartida) {
 
-				if (userPartida.equals(user))
+				if (userPartida.equals(user)) {
 
+					estaPartida = true;
 					string = "Ja estas dins de la partida";
 
-				else {
-
-					usersPartida.add(user);
-					partida.setUsers(usersPartida);
-					partidaRepository.save(partida);
-
-					partidesUser.add(partida);
-					user.setPartides(partidesUser);
-					userRepository.save(user);
-
-					string = "T'has pogut unir d'una forma molt bonica";
-
 				}
+
+			}
+
+			if (!estaPartida) {
+
+				usersPartida.add(user);
+				partida.setUsers(usersPartida);
+				partidaRepository.save(partida);
+
+				partidesUser.add(partida);
+				user.setPartides(partidesUser);
+				userRepository.save(user);
+
+				string = "T'has pogut unir d'una forma molt bonica";
+
 			}
 
 		}
