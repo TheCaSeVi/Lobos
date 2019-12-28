@@ -25,7 +25,7 @@ public class Partida implements Serializable {
 	@Column(name = "id_partida")
 	private int idPartida;
 
-	@ManyToMany(cascade = { CascadeType.ALL })
+	@ManyToMany(mappedBy = "partides", cascade = { CascadeType.ALL })
 	private Set<User> users = new HashSet<>();
 
 	@Column(name = "torn")

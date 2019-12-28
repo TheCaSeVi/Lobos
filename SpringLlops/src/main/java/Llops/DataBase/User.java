@@ -54,8 +54,8 @@ public class User implements Serializable {
 	private Set<Vot> recivesVots = new HashSet<Vot>();
 
 	@ManyToMany(cascade = { CascadeType.ALL })
-	@JoinTable(joinColumns = { @JoinColumn(name = "userName") }, inverseJoinColumns = {
-			@JoinColumn(name = "idPartida") })
+	@JoinTable(name = "user_partides", joinColumns = { @JoinColumn(name = "user_name") }, inverseJoinColumns = {
+			@JoinColumn(name = "id_partida") })
 	private Set<Partida> partides = new HashSet<>();
 
 	@OneToMany(mappedBy = "user")

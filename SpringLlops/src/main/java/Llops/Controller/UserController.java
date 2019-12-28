@@ -3,15 +3,11 @@ package Llops.Controller;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties.Xa;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +20,6 @@ import Llops.Repos.PartidaRepository;
 import Llops.Repos.UserRepository;
 import Llops.Repos.VotRepository;
 import Llops.Repos.XatMessageRepository;
-import aj.org.objectweb.asm.Type;
 
 @Controller
 @RequestMapping(path = "/llops/user")
