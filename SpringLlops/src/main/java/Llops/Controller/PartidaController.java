@@ -29,6 +29,8 @@ public class PartidaController {
 	private RolRepository rolRepository;
 	@Autowired
 	private RolJugadorPartidaRepository rolJugadorPartidaRepository;
+	@Autowired
+	private UserRepository userRepository;
 
 	@GetMapping(path = "/inici")
 	@ResponseBody
@@ -43,130 +45,164 @@ public class PartidaController {
 
 			Partida partida = partidaOptional.get();
 
-			Rol llop = new Rol();
-			Rol vilata = new Rol();
-			Rol angel = new Rol();
-			Rol caçador = new Rol();
-			Rol alcalde = new Rol();
-			Rol enamorat = new Rol();
-			Rol vident = new Rol();
+			Set<RolJugadorPartida> jugadores = partida.getUsersRolsPartida();
 
-			for (Rol rol : rols) {
+			if (jugadores.size() == 0) {
 
-				if ("llop".equalsIgnoreCase(rol.getNom())) {
+				Rol llop = new Rol();
+				Rol vilata = new Rol();
+				Rol angel = new Rol();
+				Rol caçador = new Rol();
+				Rol alcalde = new Rol();
+				Rol enamorat = new Rol();
+				Rol vident = new Rol();
 
-					llop = rol;
+				for (Rol rol : rols) {
+
+					if ("llop".equalsIgnoreCase(rol.getNom())) {
+
+						llop = rol;
+
+					}
+
+					if ("vilata".equalsIgnoreCase(rol.getNom())) {
+
+						vilata = rol;
+
+					}
+
+					if ("angel".equalsIgnoreCase(rol.getNom())) {
+
+						angel = rol;
+
+					}
+
+					if ("caçador".equalsIgnoreCase(rol.getNom())) {
+
+						caçador = rol;
+
+					}
+
+					if ("alcalde".equalsIgnoreCase(rol.getNom())) {
+
+						alcalde = rol;
+
+					}
+
+					if ("enamorat".equalsIgnoreCase(rol.getNom())) {
+
+						enamorat = rol;
+
+					}
+
+					if ("vident".equalsIgnoreCase(rol.getNom())) {
+
+						vident = rol;
+
+					}
 
 				}
 
-				if ("vilata".equalsIgnoreCase(rol.getNom())) {
+				Set<User> users = partida.getUsers();
 
-					vilata = rol;
+				int numLlops = users.size() / llop.getFreq();
+
+				ArrayList<Rol> roles = new ArrayList<Rol>();
+
+				for (int i = 0; i < numLlops; i++) {
+					roles.add(llop);
+				}
+
+				if (angel.getNom() != null) {
+
+					for (int i = 0; i < angel.getFreq(); i++) {
+						roles.add(angel);
+					}
 
 				}
 
-				if ("angel".equalsIgnoreCase(rol.getNom())) {
+				if (alcalde.getNom() != null) {
 
-					angel = rol;
-
-				}
-
-				if ("caçador".equalsIgnoreCase(rol.getNom())) {
-
-					caçador = rol;
+					for (int i = 0; i < alcalde.getFreq(); i++) {
+						roles.add(alcalde);
+					}
 
 				}
 
-				if ("alcalde".equalsIgnoreCase(rol.getNom())) {
+				if (caçador.getNom() != null) {
 
-					alcalde = rol;
-
-				}
-
-				if ("enamorat".equalsIgnoreCase(rol.getNom())) {
-
-					enamorat = rol;
+					for (int i = 0; i < caçador.getFreq(); i++) {
+						roles.add(caçador);
+					}
 
 				}
 
-				if ("vident".equalsIgnoreCase(rol.getNom())) {
+				if (enamorat.getNom() != null) {
 
-					vident = rol;
+					for (int i = 0; i < enamorat.getFreq(); i++) {
+						roles.add(enamorat);
+					}
 
 				}
+
+				if (vident.getNom() != null) {
+
+					for (int i = 0; i < vident.getFreq(); i++) {
+						roles.add(vident);
+					}
+
+				}
+
+				Set<RolJugadorPartida> rolJugadorPartidas = new HashSet<>();
+
+				for (User user : users) {
+
+					if (roles.size() > 0) {
+
+						int numRand = rand.nextInt(roles.size());
+
+						RolJugadorPartida rolJugadorPartida = new RolJugadorPartida();
+
+						rolJugadorPartida.setMort(false);
+						rolJugadorPartida.setPartida(partida);
+						rolJugadorPartida.setRol(roles.get(numRand));
+						rolJugadorPartida.setUser(user);
+
+						rolJugadorPartidas.add(rolJugadorPartida);
+
+						Set<RolJugadorPartida> jugadorPartidas = user.getUsersRolsPartida();
+						jugadorPartidas.add(rolJugadorPartida);
+
+						userRepository.save(user);
+						rolJugadorPartidaRepository.save(rolJugadorPartida);
+
+						roles.remove(numRand);
+
+					} else {
+
+						RolJugadorPartida rolJugadorPartida = new RolJugadorPartida();
+
+						rolJugadorPartida.setMort(false);
+						rolJugadorPartida.setPartida(partida);
+						rolJugadorPartida.setRol(vilata);
+						rolJugadorPartida.setUser(user);
+
+						Set<RolJugadorPartida> jugadorPartidas = user.getUsersRolsPartida();
+						jugadorPartidas.add(rolJugadorPartida);
+
+						userRepository.save(user);
+						rolJugadorPartidaRepository.save(rolJugadorPartida);
+
+						rolJugadorPartidas.add(rolJugadorPartida);
+
+					}
+
+				}
+
+				partida.setUsersRolsPartida(rolJugadorPartidas);
+				partidaRepository.save(partida);
 
 			}
-
-			Set<RolJugadorPartida> rolJugadorPartidas = partida.getUsersRolsPartida();
-
-			int numLlops = rolJugadorPartidas.size() / llop.getFreq();
-
-			ArrayList<Rol> roles = new ArrayList<Rol>();
-
-			for (int i = 0; i < numLlops; i++) {
-				roles.add(llop);
-			}
-
-			if (!angel.getNom().isEmpty()) {
-
-				for (int i = 0; i < angel.getFreq(); i++) {
-					roles.add(angel);
-				}
-
-			}
-
-			if (!alcalde.getNom().isEmpty()) {
-
-				for (int i = 0; i < alcalde.getFreq(); i++) {
-					roles.add(alcalde);
-				}
-
-			}
-
-			if (!caçador.getNom().isEmpty()) {
-
-				for (int i = 0; i < caçador.getFreq(); i++) {
-					roles.add(caçador);
-				}
-
-			}
-
-			if (!enamorat.getNom().isEmpty()) {
-
-				for (int i = 0; i < enamorat.getFreq(); i++) {
-					roles.add(enamorat);
-				}
-
-			}
-
-			if (!vident.getNom().isEmpty()) {
-
-				for (int i = 0; i < vident.getFreq(); i++) {
-					roles.add(vident);
-				}
-
-			}
-
-			for (RolJugadorPartida rolJugadorPartida : rolJugadorPartidas) {
-
-				if (roles.size() > 0) {
-
-					int numRand = rand.nextInt(roles.size());
-
-					rolJugadorPartida.setRol(roles.get(numRand));
-
-					roles.remove(numRand);
-
-				} else {
-
-					rolJugadorPartida.setRol(vilata);
-
-				}
-
-			}
-
-			partida.setUsersRolsPartida(rolJugadorPartidas);
-			partidaRepository.save(partida);
 
 		}
 
