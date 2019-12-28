@@ -39,6 +39,9 @@ public class Main {
 			User carlos = new User("Carlos", hashPass("Carlos", "1234"), "TheCaSeVi", "pathImage");
 			User adri = new User("Adrian", hashPass("Adrian", "1234"), "Adri", "pathImage");
 			User victor = new User("Victor", hashPass("Victor", "1234"), "Vic", "pathImage");
+			User carlos2 = new User("Carlos2", hashPass("Carlos2", "1234"), "TheCaSeVi", "pathImage");
+			User adri2 = new User("Adrian2", hashPass("Adrian2", "1234"), "Adri", "pathImage");
+			User victor2 = new User("Victor2", hashPass("Victor2", "1234"), "Vic", "pathImage");
 
 			// Save de roles
 			session.saveOrUpdate(lobo);
@@ -50,6 +53,9 @@ public class Main {
 			session.saveOrUpdate(carlos);
 			session.saveOrUpdate(adri);
 			session.saveOrUpdate(victor);
+			session.saveOrUpdate(carlos2);
+			session.saveOrUpdate(adri2);
+			session.saveOrUpdate(victor2);
 
 			session.saveOrUpdate(p);
 
