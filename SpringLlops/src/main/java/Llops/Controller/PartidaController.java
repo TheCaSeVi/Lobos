@@ -434,7 +434,7 @@ public class PartidaController {
 		Set<Rol> rols = new HashSet<Rol>();
 
 		for (RolJugadorPartida user : rolJugadorPartida) {
-			if (user.getPartida().getIdPartida() == idPartida) {
+			if (user.getPartida().getIdPartida() == idPartida && !user.getMort()) {
 				rols.add(user.getRol());
 			}
 		}
