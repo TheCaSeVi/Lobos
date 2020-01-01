@@ -110,8 +110,8 @@ public class Message implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Message [idMessage=" + idMessage + ", senderMessage=" + senderMessage + ", reciveMessage="
-				+ reciveMessage + ", type=" + type + ", content=" + content + ", date=" + date + "]";
+		return "Message [idMessage=" + idMessage + ", senderMessage=" + senderMessage.getUserName() + ", reciveMessage="
+				+ reciveMessage.getUserName() + ", type=" + type + ", content=" + content + ", date=" + date + "]";
 	}
 
 }

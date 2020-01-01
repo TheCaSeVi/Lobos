@@ -93,8 +93,8 @@ public class Vot implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Vot [idVot=" + idVot + ", senderVot=" + senderVot + ", reciverVot=" + reciverVot + ", partidVot="
-				+ partidVot + ", tornVot=" + tornVot + "]";
+		return "Vot [idVot=" + idVot + ", senderVot=" + senderVot.getUserName() + ", reciverVot="
+				+ reciverVot.getUserName() + ", partidVot=" + partidVot.getIdPartida() + ", tornVot=" + tornVot + "]";
 	}
 
 }

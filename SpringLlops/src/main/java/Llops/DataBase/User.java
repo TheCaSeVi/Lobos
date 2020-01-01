@@ -189,11 +189,10 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [userName=" + userName + ", password=" + password + ", alias=" + alias + ", pathAvatar="
-				+ pathAvatar + ", percentatgeVict=" + percentatgeVict + ", sendsMessage=" + sendsMessage
-				+ ", recivesMessage=" + recivesMessage + ", sendsVots=" + sendsVots + ", recivesVots=" + recivesVots
-				+ ", partides=" + partides + ", usersRolsPartida=" + usersRolsPartida + ", sendsXatMessage="
-				+ sendsXatMessage + ", userMorts=" + userMorts + "]";
+		return "User [userName=" + userName + ", alias=" + alias + ", pathAvatar=" + pathAvatar + ", percentatgeVict="
+				+ percentatgeVict + ", sendsMessage=" + sendsMessage + ", recivesMessage=" + recivesMessage
+				+ ", sendsVots=" + sendsVots + ", recivesVots=" + recivesVots + ", usersRolsPartida=" + usersRolsPartida
+				+ ", sendsXatMessage=" + sendsXatMessage + ", userMorts=" + userMorts + "]";
 	}
 
 }

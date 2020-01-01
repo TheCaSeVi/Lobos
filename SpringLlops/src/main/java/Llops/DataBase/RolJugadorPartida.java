@@ -96,8 +96,8 @@ public class RolJugadorPartida implements Serializable {
 
 	@Override
 	public String toString() {
-		return "RolJugadorPartida [idUserRolPartida=" + idUserRolPartida + ", user=" + user + ", rol=" + rol
-				+ ", partida=" + partida + ", mort=" + mort + "]";
+		return "RolJugadorPartida [idUserRolPartida=" + idUserRolPartida + ", user=" + user.getUserName() + ", rol="
+				+ rol.getNom() + ", partida=" + partida.getIdPartida() + "]";
 	}
 
 }

@@ -95,8 +95,8 @@ public class XatMessage implements Serializable {
 
 	@Override
 	public String toString() {
-		return "XatMessage [idXatMessage=" + idXatMessage + ", senderXatMessage=" + senderXatMessage
-				+ ", partidaXatMessage=" + partidaXatMessage + ", contentXatMessage=" + contentXatMessage
+		return "XatMessage [idXatMessage=" + idXatMessage + ", senderXatMessage=" + senderXatMessage.getUserName()
+				+ ", partidaXatMessage=" + partidaXatMessage.getIdPartida() + ", contentXatMessage=" + contentXatMessage
 				+ ", dataMessage=" + dataMessage + "]";
 	}
 

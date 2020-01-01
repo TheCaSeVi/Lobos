@@ -79,7 +79,7 @@ public class Mort implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Mort [idMort=" + idMort + ", userMort=" + userMort + ", partidaMort=" + partidaMort + ", tornMort="
+		return "Mort [idMort=" + idMort + ", userMort=" + userMort.getUserName() + ", partidaMort=" + partidaMort.getIdPartida() + ", tornMort="
 				+ tornMort + "]";
 	}
 
